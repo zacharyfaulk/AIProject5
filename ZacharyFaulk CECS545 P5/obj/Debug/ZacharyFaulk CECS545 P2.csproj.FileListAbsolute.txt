@@ -1,0 +1,11 @@
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\obj\Debug\ZacharyFaulk CECS545 P2.csprojResolveAssemblyReference.cache
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\obj\Debug\ZacharyFaulk_CECS545_P2.P2_GUI.resources
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\obj\Debug\ZacharyFaulk CECS545 P2.csproj.GenerateResource.Cache
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\bin\Debug\ZacharyFaulk CECS545 P2.exe.config
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\bin\Debug\ZacharyFaulk CECS545 P2.exe
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\bin\Debug\ZacharyFaulk CECS545 P2.pdb
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\obj\Debug\ZacharyFaulk CECS545 P2.exe
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P2\ZacharyFaulk CECS545 P2\obj\Debug\ZacharyFaulk CECS545 P2.pdb
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P3\ZacharyFaulk CECS545 P3\bin\Debug\ZacharyFaulk CECS545 P2.exe.config
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P3\ZacharyFaulk CECS545 P3\obj\Debug\ZacharyFaulk CECS545 P2.exe
+C:\Users\Zachary Faulk\Documents\Visual Studio 2015\Projects\ZacharyFaulk CECS545 P3\ZacharyFaulk CECS545 P3\obj\Debug\ZacharyFaulk CECS545 P2.pdb
