@@ -179,16 +179,21 @@ namespace ZacharyFaulk_CECS545_P5
                     //and reset the GA stop condition
                     z = 0;
                     globalVars.shortDistance = tempDistance;
+                    globalVars.shortList.Clear();
                     globalVars.shortList.AddRange(topChild.path);
                 }
             }
-            //Console.WriteLine("The Distance is " + globalVars.shortDistance);
-            //Console.WriteLine("The Old Path is " + string.Join(",", globalVars.shortList));
+            Console.WriteLine("The Old Distance is " + globalVars.shortDistance);
+            Console.WriteLine("The Old Path is " + string.Join(",", globalVars.shortList));
             globalVars.shortDistance = 0;
             globalVars.shortList.Clear();
 
-            //Console.WriteLine("The Path is " + string.Join(",", globalVars.shortList));
-            //Console.ReadKey();
+            /*for (int p = 0; p < globalVars.crowdSize; p++)
+            {
+                Console.WriteLine(p + "    " + globalVars.wisdomList[p].distance);
+            }
+            Console.WriteLine(globalVars.wisdomList.Count);
+            Console.ReadKey();*/
 
             Console.WriteLine("Start WOC");
             Console.WriteLine("WOC List Length = " + globalVars.wisdomList.Count);
@@ -198,6 +203,13 @@ namespace ZacharyFaulk_CECS545_P5
             {
                 int xy1 = globalVars.shortList[d - 1] - 1; //Location of city A in city List
                 int xy2 = globalVars.shortList[d] - 1;     //Location of city B in city List
+
+                if(xy1 < 0 || xy2 < 0)
+                {
+                    Console.WriteLine("Bad Solution");
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                }
 
                 //Find x and y coordinates of city A and B
                 float x1 = cityArray[xy1].xCoordinate;
@@ -224,7 +236,7 @@ namespace ZacharyFaulk_CECS545_P5
             stopWatch.Stop();   //Stop Stopwatch
 
             //Print distance/path/time data
-            //Console.WriteLine("File = " + fileName);
+            Console.WriteLine("File = " + fileName);
             Console.WriteLine("The Distance is " + globalVars.shortDistance);
             Console.WriteLine("The New Path is " + string.Join(",", globalVars.shortList));
             time1 = stopWatch.ElapsedMilliseconds;
@@ -293,11 +305,11 @@ namespace ZacharyFaulk_CECS545_P5
         //GA parameters
         /////////////////////////////////////////////
         public bool random = false;         //Determines what initial parents the GA will use
-        public int maxChildren = 400;       //Population size
-        public int pmx = 5;                //Size of the path that will swapped with the pmx crossover
-        public int sameGen = 500;           //Stopping point of GA, stops when the same distance of the top child is found x many times
+        public int maxChildren = 500;       //Population size
+        public int pmx = 15;                //Size of the path that will swapped with the pmx crossover
+        public int sameGen = 1000;           //Stopping point of GA, stops when the same distance of the top child is found x many times
         public double mutation = 5;         //Mutation rate
-        public int crowdSize = 400;
+        public int crowdSize = 500;
         /////////////////////////////////////////////
 
         public int unique = 0;              //Counts the amount of unique solutions from the Split functions

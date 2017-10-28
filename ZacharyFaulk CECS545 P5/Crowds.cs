@@ -52,7 +52,7 @@ namespace ZacharyFaulk_CECS545_P5
                     tempIndex2 = globalVars.wisdomList[k].path.IndexOf(tempIndex);
                     globalVars.wisdomList[k].path.RemoveAt(tempIndex2);
                     globalVars.wisdomList[k].path.Insert(tempIndex2, 0);
-                   // Console.WriteLine("The after Path is " + string.Join(",", globalVars.wisdomList[k].path));
+                    //Console.WriteLine("The after Path is " + string.Join(",", globalVars.wisdomList[k].path));
                 }
             }
             globalVars.shortList.Add(1);
