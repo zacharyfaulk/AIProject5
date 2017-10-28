@@ -39,7 +39,11 @@ namespace ZacharyFaulk_CECS545_P5
                         //the current child and insert the child before that element
                         for (int c = 0; c < childList.Count; c++)
                         {
-                            if (tempChild.distance < childList[c].distance)
+                            if (tempChild.distance == childList[c].distance)
+                            {
+                                return;
+                            }
+                            else if (tempChild.distance < childList[c].distance)
                             {
                                 childList.Insert(c, tempChild);
                                 childList.RemoveAt(globalVars.maxChildren);
@@ -58,7 +62,11 @@ namespace ZacharyFaulk_CECS545_P5
                     //the current child and insert the child before that element
                     for (int c = 0; c < childList.Count; c++)
                     {
-                        if (tempChild.distance < childList[c].distance)
+                        if (tempChild.distance == childList[c].distance)
+                        {
+                            return;
+                        }
+                        else if (tempChild.distance < childList[c].distance)
                         {
                             childList.Insert(c, tempChild);
                             return;

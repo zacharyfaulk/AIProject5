@@ -15,7 +15,7 @@ namespace ZacharyFaulk_CECS545_P5
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string fileName = "Random77.TSP";    //File name being tested
+            string fileName = "Random222.TSP";    //File name being tested
 
             //Variables to keep track of execution time
             Stopwatch stopWatch = new Stopwatch();
@@ -32,7 +32,9 @@ namespace ZacharyFaulk_CECS545_P5
             int count = 0;          //Count variable
             double split = 2;       //Split variables
             float split2 = 0;
-                       
+            float distance = 0;
+            float totalDistance = 0;
+
             globalVars globalVars = new globalVars();           //Object to hold "global" variables
             List<newChild>[] genList = new List<newChild>[2];   //Array to hold the children of each generation
             genList[0] = new List<newChild>();      //Swaps between holding the parents and children of a generation
@@ -69,6 +71,7 @@ namespace ZacharyFaulk_CECS545_P5
             //If input for GA is choosen to be random
             if (globalVars.random == true)
             {
+                Console.WriteLine("Random Inputs");
                 Random rnd = new Random();
                 List<int> temp1 = new List<int>();  //Temp list
 
@@ -82,8 +85,7 @@ namespace ZacharyFaulk_CECS545_P5
                 //Create "population size" of random tours 
                 for (int r = 0; r < globalVars.maxChildren; r++)
                 {
-                    float distance = 0;
-                    float totalDistance = 0;
+
                     List<int> temp2 = new List<int>(temp1);
                     int n = temp2.Count;
 
@@ -128,6 +130,7 @@ namespace ZacharyFaulk_CECS545_P5
             //If input for GA is choosen to use the tours found by the greedy algorithm
             else
             {
+                Console.WriteLine("Greedy Inputs");
                 //Split the map of cities at y = split and x = split
                 //to generate solutions to use as the initial parents for the GA
                 for (split = 2; split < 100; split += 0.5)
@@ -140,8 +143,23 @@ namespace ZacharyFaulk_CECS545_P5
                 }
             }
 
+            /*
+            for (int p = 0; p < genList[0].Count; p++)
+            {
+                Console.WriteLine(string.Join(",", (genList[0])[p].distance));
+            }
+            Console.WriteLine(genList[0].Count);
+            for (int p = 0; p < globalVars.wisdomList.Count; p++)
+            {
+                Console.WriteLine(string.Join(",", globalVars.wisdomList[p].distance));
+            }
+            Console.WriteLine(globalVars.wisdomList.Count);
+            Console.ReadKey();
+            */
+
             //Calls GA functions until the same distance
             //of the top child is found "globalVars.sameGen" times
+            Console.WriteLine("Start GA");
             for (z = 0; z < globalVars.sameGen; z++)
             {                
                 gen++;      //Keeps track of the current generation
@@ -153,7 +171,7 @@ namespace ZacharyFaulk_CECS545_P5
                 //Checks if the top child from the generation is more fit
                 //than the top child from the last generation
                 tempDistance = topChild.distance;
-                Console.WriteLine("gen " + gen + "          " + tempDistance);
+                //Console.WriteLine("gen " + gen + "          " + tempDistance);
                 if(tempDistance < globalVars.shortDistance)
                 {
                     //If the child is more fit than the previous generation
@@ -161,16 +179,54 @@ namespace ZacharyFaulk_CECS545_P5
                     //and reset the GA stop condition
                     z = 0;
                     globalVars.shortDistance = tempDistance;
-                    globalVars.shortList = topChild.path;
+                    globalVars.shortList.AddRange(topChild.path);
                 }
             }
+            //Console.WriteLine("The Distance is " + globalVars.shortDistance);
+            //Console.WriteLine("The Old Path is " + string.Join(",", globalVars.shortList));
+            globalVars.shortDistance = 0;
+            globalVars.shortList.Clear();
+
+            //Console.WriteLine("The Path is " + string.Join(",", globalVars.shortList));
+            //Console.ReadKey();
+
+            Console.WriteLine("Start WOC");
+            Console.WriteLine("WOC List Length = " + globalVars.wisdomList.Count);
+            Crowds.crowds(newLength, ref globalVars);
+            //Console.WriteLine("The New Path is " + string.Join(",", globalVars.shortList));
+            for (int d = 1; d < globalVars.shortList.Count; d++)
+            {
+                int xy1 = globalVars.shortList[d - 1] - 1; //Location of city A in city List
+                int xy2 = globalVars.shortList[d] - 1;     //Location of city B in city List
+
+                //Find x and y coordinates of city A and B
+                float x1 = cityArray[xy1].xCoordinate;
+                float x2 = cityArray[xy2].xCoordinate;
+                float y1 = cityArray[xy1].yCoordinate;
+                float y2 = cityArray[xy2].yCoordinate;
+
+                //Use distance equation to find the distance between city A and B
+                //Add distance to totalDistance
+                distance = (float)Math.Sqrt((((x2 - x1)) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+                totalDistance = totalDistance + distance;
+            }
+            globalVars.shortDistance = totalDistance;
+
+
+            //for (int p = 0; p < globalVars.crowdSize; p++)
+            //{
+            //    Console.WriteLine(p + "    " + globalVars.wisdomList[p].distance);
+            //}
+            //Console.WriteLine(globalVars.wisdomList.Count);
+            //Console.WriteLine("The Old Path is " + string.Join(",", globalVars.shortList));
+            //Console.ReadKey();
 
             stopWatch.Stop();   //Stop Stopwatch
 
             //Print distance/path/time data
-            Console.WriteLine("File = " + fileName);
+            //Console.WriteLine("File = " + fileName);
             Console.WriteLine("The Distance is " + globalVars.shortDistance);
-            Console.WriteLine("The Path is " + string.Join(",", globalVars.shortList));
+            Console.WriteLine("The New Path is " + string.Join(",", globalVars.shortList));
             time1 = stopWatch.ElapsedMilliseconds;
             time1 = (float)TimeSpan.FromMilliseconds(time1).TotalSeconds;
             time2 = stopWatch.ElapsedMilliseconds.ToString();
@@ -237,10 +293,11 @@ namespace ZacharyFaulk_CECS545_P5
         //GA parameters
         /////////////////////////////////////////////
         public bool random = false;         //Determines what initial parents the GA will use
-        public int maxChildren = 100;       //Population size
-        public int pmx = 15;                //Size of the path that will swapped with the pmx crossover
-        public int sameGen = 150;           //Stopping point of GA, stops when the same distance of the top child is found x many times
+        public int maxChildren = 400;       //Population size
+        public int pmx = 5;                //Size of the path that will swapped with the pmx crossover
+        public int sameGen = 500;           //Stopping point of GA, stops when the same distance of the top child is found x many times
         public double mutation = 5;         //Mutation rate
+        public int crowdSize = 400;
         /////////////////////////////////////////////
 
         public int unique = 0;              //Counts the amount of unique solutions from the Split functions
@@ -249,6 +306,7 @@ namespace ZacharyFaulk_CECS545_P5
         public float shortDistance = float.MaxValue;    //holds the shortest distance found by the GA algorithm
         public List<int> shortList = new List<int>();   //holds the shortest tour found by the GA algorithm 
         public List<int> lastPath = new List<int>();    //holds the last found tour by the Split functions to prevent duplicate tours
+        public List<newChild> wisdomList = new List<newChild>();
     }
 }
 

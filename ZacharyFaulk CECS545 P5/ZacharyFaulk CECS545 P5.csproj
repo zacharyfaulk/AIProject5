@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crowds.cs" />
     <Compile Include="InsertNode.cs" />
     <Compile Include="NewGen.cs" />
     <Compile Include="NewGenChild.cs" />

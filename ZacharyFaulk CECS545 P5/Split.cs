@@ -176,6 +176,7 @@ namespace ZacharyFaulk_CECS545_P5
 
                 //Sort the tempChild
                 SortChild.sortChild(tempChild, ref globalVars, ref childList);
+                SortChild.sortChild(tempChild, ref globalVars, ref globalVars.wisdomList);
             }
 
         }
@@ -347,6 +348,7 @@ namespace ZacharyFaulk_CECS545_P5
 
                 //Sort the tempChild
                 SortChild.sortChild(tempChild, ref globalVars, ref childList);
+                SortChild.sortChild(tempChild, ref globalVars, ref globalVars.wisdomList);
             }
 
         }
