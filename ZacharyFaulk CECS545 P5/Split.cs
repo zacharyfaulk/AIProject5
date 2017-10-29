@@ -140,16 +140,6 @@ namespace ZacharyFaulk_CECS545_P5
                     totalDistance = totalDistance + distance;
                 }
 
-                //If the new path distance is smaller than the
-                //current smallest distance then replace
-                //the smallest distance with the new distance
-                if (totalDistance < globalVars.shortDistance)
-                {
-                    globalVars.shortDistance = totalDistance;  //Store the new shorter distance
-                    globalVars.shortList = topFinal;           //Store the corresponding path
-                    globalVars.shortSplit = split;             //Store the current split value
-                }
-
                 //Store the most recent path to avoid
                 //computing the same path multiple times
                 globalVars.lastPath = topFinal;
@@ -173,6 +163,17 @@ namespace ZacharyFaulk_CECS545_P5
                     }
                 }
                 tempChild.path.Add(tempChild.path[0]);
+
+                //If the new path distance is smaller than the
+                //current smallest distance then replace
+                //the smallest distance with the new distance
+                if (tempChild.distance < globalVars.shortDistance)
+                {
+                    globalVars.shortList.Clear();
+                    globalVars.shortDistance = tempChild.distance;  //Store the new shorter distance
+                    globalVars.shortList.AddRange(tempChild.path);  //Store the corresponding path
+                    globalVars.shortSplit = split;             //Store the current split value
+                }
 
                 //Sort the tempChild
                 SortChild.sortChild(tempChild, ref globalVars, ref childList);
@@ -312,16 +313,6 @@ namespace ZacharyFaulk_CECS545_P5
                     totalDistance = totalDistance + distance;
                 }
 
-                //If the new path distance is smaller than the
-                //current smallest distance then replace
-                //the smallest distance with the new distance
-                if (totalDistance < globalVars.shortDistance)
-                {
-                    globalVars.shortDistance = totalDistance;  //Store the new shorter distance
-                    globalVars.shortList = topFinal;           //Store the corresponding path
-                    globalVars.shortSplit = split;             //Store the current split value
-                }
-
                 //Store the most recent path to avoid
                 //computing the same path multiple times
                 globalVars.lastPath = topFinal;
@@ -345,6 +336,17 @@ namespace ZacharyFaulk_CECS545_P5
                     }
                 }
                 tempChild.path.Add(tempChild.path[0]);
+
+                //If the new path distance is smaller than the
+                //current smallest distance then replace
+                //the smallest distance with the new distance
+                if (tempChild.distance < globalVars.shortDistance)
+                {
+                    globalVars.shortList.Clear();
+                    globalVars.shortDistance = tempChild.distance;  //Store the new shorter distance
+                    globalVars.shortList.AddRange(tempChild.path);  //Store the corresponding path
+                    globalVars.shortSplit = split;             //Store the current split value
+                }
 
                 //Sort the tempChild
                 SortChild.sortChild(tempChild, ref globalVars, ref childList);

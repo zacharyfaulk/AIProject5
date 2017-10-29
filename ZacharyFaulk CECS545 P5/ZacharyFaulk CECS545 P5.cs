@@ -15,7 +15,7 @@ namespace ZacharyFaulk_CECS545_P5
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string fileName = "Random222.TSP";    //File name being tested
+            string fileName = "Random22.TSP";    //File name being tested
 
             //Variables to keep track of execution time
             Stopwatch stopWatch = new Stopwatch();
@@ -32,7 +32,7 @@ namespace ZacharyFaulk_CECS545_P5
             int count = 0;          //Count variable
             double split = 2;       //Split variables
             float split2 = 0;
-            float distance = 0;
+            float distance = 0;     //Distance variables
             float totalDistance = 0;
 
             globalVars globalVars = new globalVars();           //Object to hold "global" variables
@@ -127,6 +127,7 @@ namespace ZacharyFaulk_CECS545_P5
                     SortChild.sortChild(tempChild, ref globalVars, ref genList[0]);
                 }
             }
+
             //If input for GA is choosen to use the tours found by the greedy algorithm
             else
             {
@@ -142,20 +143,6 @@ namespace ZacharyFaulk_CECS545_P5
                     Split.splitX(cityArray, split2, ref globalVars, ref genList[0]);
                 }
             }
-
-            /*
-            for (int p = 0; p < genList[0].Count; p++)
-            {
-                Console.WriteLine(string.Join(",", (genList[0])[p].distance));
-            }
-            Console.WriteLine(genList[0].Count);
-            for (int p = 0; p < globalVars.wisdomList.Count; p++)
-            {
-                Console.WriteLine(string.Join(",", globalVars.wisdomList[p].distance));
-            }
-            Console.WriteLine(globalVars.wisdomList.Count);
-            Console.ReadKey();
-            */
 
             //Calls GA functions until the same distance
             //of the top child is found "globalVars.sameGen" times
@@ -183,31 +170,34 @@ namespace ZacharyFaulk_CECS545_P5
                     globalVars.shortList.AddRange(topChild.path);
                 }
             }
+
+            //Prints the shortest tour/distance before the wisdom of crowds function is called
             Console.WriteLine("The Old Distance is " + globalVars.shortDistance);
             Console.WriteLine("The Old Path is " + string.Join(",", globalVars.shortList));
             globalVars.shortDistance = 0;
             globalVars.shortList.Clear();
 
-            /*for (int p = 0; p < globalVars.crowdSize; p++)
-            {
-                Console.WriteLine(p + "    " + globalVars.wisdomList[p].distance);
-            }
-            Console.WriteLine(globalVars.wisdomList.Count);
-            Console.ReadKey();*/
-
+            //Calls the Wisdom of Crowds function
             Console.WriteLine("Start WOC");
             Console.WriteLine("WOC List Length = " + globalVars.wisdomList.Count);
             Crowds.crowds(newLength, ref globalVars);
-            //Console.WriteLine("The New Path is " + string.Join(",", globalVars.shortList));
+
+            //Finds the distance for the Wisdom of Crowds tour
             for (int d = 1; d < globalVars.shortList.Count; d++)
             {
                 int xy1 = globalVars.shortList[d - 1] - 1; //Location of city A in city List
                 int xy2 = globalVars.shortList[d] - 1;     //Location of city B in city List
 
+                //If the WOC algorithm produced an imcomplete tour (not likely),
+                //restart the application to find a clean solution
+                //Bad solutions occurs when the WOC algorithm finds
+                //an index that has no cities in it (all cities at index i are set to 0)
                 if(xy1 < 0 || xy2 < 0)
                 {
                     Console.WriteLine("Bad Solution");
+                    Console.WriteLine("Press any key to restart");
                     Console.ReadKey();
+                    Application.Restart();
                     Environment.Exit(0);
                 }
 
@@ -224,15 +214,6 @@ namespace ZacharyFaulk_CECS545_P5
             }
             globalVars.shortDistance = totalDistance;
 
-
-            //for (int p = 0; p < globalVars.crowdSize; p++)
-            //{
-            //    Console.WriteLine(p + "    " + globalVars.wisdomList[p].distance);
-            //}
-            //Console.WriteLine(globalVars.wisdomList.Count);
-            //Console.WriteLine("The Old Path is " + string.Join(",", globalVars.shortList));
-            //Console.ReadKey();
-
             stopWatch.Stop();   //Stop Stopwatch
 
             //Print distance/path/time data
@@ -247,7 +228,8 @@ namespace ZacharyFaulk_CECS545_P5
 
             //Run Windows Form Application to graph the shortest path
             Application.Run(new GUI(cityArray, globalVars.shortList));
-
+            //Application.Restart();
+            //Environment.Exit(0);
             Console.ReadKey();
         }
     }
@@ -305,20 +287,23 @@ namespace ZacharyFaulk_CECS545_P5
         //GA parameters
         /////////////////////////////////////////////
         public bool random = false;         //Determines what initial parents the GA will use
-        public int maxChildren = 500;       //Population size
-        public int pmx = 15;                //Size of the path that will swapped with the pmx crossover
-        public int sameGen = 1000;           //Stopping point of GA, stops when the same distance of the top child is found x many times
+        public int maxChildren = 100;       //Population size
+        public int pmx = 5;                 //Size of the path that will swapped with the pmx crossover
+        public int sameGen = 100;           //Stopping point of GA, stops when the same distance of the top child is found x many times
         public double mutation = 5;         //Mutation rate
-        public int crowdSize = 500;
+        public int crowdSize = 100;         //Determines the population size for the wisdom of crowds function, must be < maxChildren
         /////////////////////////////////////////////
 
         public int unique = 0;              //Counts the amount of unique solutions from the Split functions
         public int genVar = 0;              //Determines which list in genList[] are the parents are which are the children 
         public float shortSplit = 0;        //Shortest split found by the Split functions
-        public float shortDistance = float.MaxValue;    //holds the shortest distance found by the GA algorithm
-        public List<int> shortList = new List<int>();   //holds the shortest tour found by the GA algorithm 
-        public List<int> lastPath = new List<int>();    //holds the last found tour by the Split functions to prevent duplicate tours
-        public List<newChild> wisdomList = new List<newChild>();
+        public float shortDistance = float.MaxValue;    //Holds the shortest distance found by the GA algorithm
+        public List<int> shortList = new List<int>();   //Holds the shortest tour found by the GA algorithm 
+        public List<int> lastPath = new List<int>();    //Holds the last found tour by the Split functions to prevent duplicate tours
+
+        //Holds the unique tours created by the greedy algorithm and the 
+        //genetic algorithm for the wisdom of crowds algorithm to use
+        public List<newChild> wisdomList = new List<newChild>();    
     }
 }
 

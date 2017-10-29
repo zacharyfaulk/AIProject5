@@ -80,6 +80,7 @@ namespace ZacharyFaulk_CECS545_P5
             {
                 SortChild.sortChild(tempChild, ref globalVars, ref genList[0]);
             }
+            //Sort child into the wisdomList to be used for WOC
             SortChild.sortChild(tempChild, ref globalVars, ref globalVars.wisdomList);
 
         }
