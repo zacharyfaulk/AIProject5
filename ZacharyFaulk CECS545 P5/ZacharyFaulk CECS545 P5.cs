@@ -218,7 +218,7 @@ namespace ZacharyFaulk_CECS545_P5
 
             //Print distance/path/time data
             Console.WriteLine("File = " + fileName);
-            Console.WriteLine("The Distance is " + globalVars.shortDistance);
+            Console.WriteLine("The New Distance is " + globalVars.shortDistance);
             Console.WriteLine("The New Path is " + string.Join(",", globalVars.shortList));
             time1 = stopWatch.ElapsedMilliseconds;
             time1 = (float)TimeSpan.FromMilliseconds(time1).TotalSeconds;
